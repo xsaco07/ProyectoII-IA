@@ -38,6 +38,39 @@ class Agent{
 
 }
 
+class ServiceOrder{
+
+	constructor(id, clientName, serviceCode){
+		this.id = id;
+		this.clientName = clientName;
+		this.serviceCode = serviceCode;
+	}
+
+	setId(id){
+		this.id = id;
+	}
+
+	setClientName(clientName){
+		this.clientName = clientName;
+	}
+
+	setServiceCode(serviceCode){
+		this.serviceCode = serviceCode;
+	}
+
+	getId(){
+		return this.id;
+	}
+
+	getClientName(){
+		return this.clientName;
+	}
+
+	getServiceCode(){
+		return this.serviceCode;
+	}
+}
+
 class XMLParser {
 
   static parseAgentFile(xmlContent) {
@@ -76,7 +109,27 @@ class XMLParser {
   }
 
   static parseServiceFile(xmlContent) {
+    var servicesParsed = [];
+    var serviceId = "", serviceCode = "", clientName = "";
 
+    // Initialize parser to parse XML files
+    var parser = new DOMParser();
+    var xmlDoc = parser.parseFromString(xmlContent,"text/xml");
+
+    // Get a list with all agents in the file
+    var XMLservices = xmlDoc.getElementsByTagName("service");
+
+    for (var i = 0; i < XMLservices.length; i++) {
+
+      serviceId = XMLservices[i].getAttribute('id');
+      serviceCode = XMLservices[i].getAttribute('code');
+      clientName = XMLservices[i].children[0].textContent;
+
+      // Save each new Service object
+      servicesParsed.push(new ServiceOrder(serviceId, clientName, serviceCode));
+    }
+
+    return servicesParsed;
   }
 }
 
@@ -88,9 +141,12 @@ function fileLoaded() {
   reader.readAsText(inputFile);
 
   reader.onload = function() { // When the file reading is done do something
-    var agents = XMLParser.parseAgentFile(reader.result);
+    // var agents = XMLParser.parseAgentFile(reader.result);
+    // console.log(agents);
+    var services = XMLParser.parseServiceFile(reader.result);
+    console.log(services);
+    
     document.getElementById('file-name').innerHTML = inputFile.name;
-    console.log(agents);
   }
 }
 
