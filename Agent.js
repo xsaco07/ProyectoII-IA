@@ -1,14 +1,14 @@
 class Agent{
 
 	/**
-	 * @param {string} id 
-	 * @param {string} name 
+	 * @param {string} id
+	 * @param {string} name
 	 * @param {array} services - list of ServiceCodes
 	 */
 	constructor(id, name, services){
 		this.id = id;
 		this.name = name;
-		this.services = services; 
+		this.services = services;
 	}
 
 	setId(id){
@@ -23,7 +23,6 @@ class Agent{
 		this.services = services;
 	}
 
-
 	getId(){
 		return this.id;
 	}
@@ -37,8 +36,4 @@ class Agent{
 		return this.services;
 	}
 
-
 }
-
-
-module.exports = Agent;

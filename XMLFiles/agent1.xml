@@ -1,9 +1,0 @@
-<?xml version= "1.0"?>
-<agents>
-  <agent id="1" name="Isaac Mena Lopez">
-    <service>ICE</service>
-    <service>IGE</service>
-    <service>ILA</service>
-    <service>RLA</service>
-  </agent>
-</agents>

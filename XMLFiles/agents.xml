@@ -1,0 +1,33 @@
+<?xml version= "1.0"?>
+<agents>
+  <agent id="1" name="Agente1">
+    <service>ICE</service>
+    <service>IGE</service>
+    <service>ILA</service>
+    <service>RLA</service>
+  </agent>
+  <agent id="2" name="Agente2">
+    <service>ICE</service>
+    <service>IGE</service>
+    <service>ILA</service>
+    <service>RLA</service>
+  </agent>
+  <agent id="3" name="Agente3">
+    <service>ICE</service>
+    <service>IGE</service>
+    <service>ILA</service>
+    <service>RLA</service>
+  </agent>
+  <agent id="4" name="Agente4">
+    <service>ICE</service>
+    <service>IGE</service>
+    <service>ILA</service>
+    <service>RLA</service>
+  </agent>
+  <agent id="5" name="Agente5">
+    <service>ICE</service>
+    <service>IGE</service>
+    <service>ILA</service>
+    <service>RLA</service>
+  </agent>
+</agents>

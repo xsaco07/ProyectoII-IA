@@ -1,44 +1,77 @@
-const inputFileField = document.querySelector('input[type=file]');
-inputFileField.addEventListener('change', readFile); // When an input file is loaded
+class Agent{
 
-function readFile() {
+	/**
+	 * @param {string} id
+	 * @param {string} name
+	 * @param {array} services - list of ServiceCodes
+	 */
+	constructor(id, name, services){
+		this.id = id;
+		this.name = name;
+		this.services = services;
+	}
 
-  const reader = new FileReader();
-  const inputFile = inputFileField.files[0] // Get the file loaded by the user
+	setId(id){
+		this.id = id;
+	}
 
-  reader.readAsText(inputFile);
+	setName(name){
+		this.name = name;
+	}
 
-  reader.onload = function() { // When the file load is done do something
-    parser = new DOMParser();
-    xmlDoc = parser.parseFromString(reader.result,"text/xml");
-    var content = xmlDoc.getElementsByTagName("name");
-    for (var i = 0; i < content.length; i++) {
-      console.log(content[i].childNodes[0].nodeValue);
-    }
-    console.log(content);
-    document.getElementById('file-name').innerHTML = inputFile.name;
-  }
+	setServices(services){
+		this.services = services;
+	}
+
+	getId(){
+		return this.id;
+	}
+
+	getName(){
+		return this.name;
+	}
+
+
+	getServices(){
+		return this.services;
+	}
+
 }
 
 class XMLParser {
 
   static parseAgentFile(xmlContent) {
-    var agentParsed = null;
-    var services = []
-    var agentId = "", name = "";
 
-    parser = new DOMParser();
-    xmlDoc = parser.parseFromString(xmlContent,"text/xml");
+    var agentsParsed = [];
+    var agentId = "", agentName = "";
+
+    // Initialize parser to parse XML files
+    var parser = new DOMParser();
+    var xmlDoc = parser.parseFromString(xmlContent,"text/xml");
+
+    // Get a list with all agents in the file
     var XMLagents = xmlDoc.getElementsByTagName("agent");
+
     for (var i = 0; i < XMLagents.length; i++) {
-      agentId = XMLagents[i].getAttribbute('id');
-      name = XMLagents[i].getAttribbute('name');
-      var XMLservices = XMLagents[i].childNodes;
-      for (var i = 0; i < array.length; i++) {
-        array[i]
+
+      // Clean services list on each iteration
+      var services = []
+
+      agentId = XMLagents[i].getAttribute('id');
+      agentName = XMLagents[i].getAttribute('name');
+
+      // Get a list of services for each agent
+      var XMLservices = XMLagents[i].children;
+      for (var j = 0; j < XMLservices.length; j++) {
+        // Save it's serviceCode
+        services.push(XMLservices[j].textContent);
       }
+
+      // Save each new Agent object
+      agentsParsed.push(new Agent(agentId, agentName, services));
     }
 
+    return agentsParsed;
 
   }
 
@@ -46,3 +79,20 @@ class XMLParser {
 
   }
 }
+
+function fileLoaded() {
+
+  const reader = new FileReader();
+  const inputFile = inputFileField.files[0] // Get the file loaded by the user
+
+  reader.readAsText(inputFile);
+
+  reader.onload = function() { // When the file reading is done do something
+    var agents = XMLParser.parseAgentFile(reader.result);
+    document.getElementById('file-name').innerHTML = inputFile.name;
+    console.log(agents);
+  }
+}
+
+const inputFileField = document.querySelector('input[type=file]');
+inputFileField.addEventListener('change', fileLoaded); // When an input file is loaded
