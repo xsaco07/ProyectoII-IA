@@ -1,0 +1,35 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  background-color: #F2F3F4;
+}
+
+#title {
+  padding: 10px;
+  background-color: #7FB3D5;
+  color: white;
+}
+
+#drop-space {
+  background-color: white;
+  height: 250px;
+  border: 2px black dashed;
+  display: table;
+}
+
+#drop-space:hover {
+  background-color: #F4F6F6;
+}
+
+#plus-icon {
+  font-size: 45px;
+}
+
+#icon-field {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
