@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="./main.css">
   <script src="https://kit.fontawesome.com/1927c2f92b.js"></script>
@@ -76,6 +75,63 @@
             <input type="file" class="custom-file-input" id="service-file-input"
               aria-describedby="inputGroupFileAddon01">
             <label class="custom-file-label" id="service-file-name" for="file-input">No se ha cargado ningún archivo</label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row justify-content-center mt-4">
+
+      <div class="col-4 text-center mr-4">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary modal-btn" data-toggle="modal" data-target="#agentModal">
+          Mostrar contenido
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="agentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Agent XML content</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4 text-center">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary modal-btn" data-toggle="modal" data-target="#serviceModal">
+          Mostrar contenido
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="serviceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Service XML content</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p id="modal-body-text"></p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

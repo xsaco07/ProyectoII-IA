@@ -1,3 +1,14 @@
+var agentXMLContent = "";
+var serviceXMLContent = "";
+
+const agentFileField = document.getElementById('agent-file-input');
+const serviceFileField = document.getElementById('service-file-input');
+
+var agentModalButton = document.querySelectorAll('.modal-btn')[0];
+var serviceModalButton = document.querySelectorAll('.modal-btn')[1];
+
+//------------------------------------------------------------------------------
+
 class Agent{
 
 	/**
@@ -109,6 +120,7 @@ class XMLParser {
   }
 
   static parseServiceFile(xmlContent) {
+
     var servicesParsed = [];
     var serviceId = "", serviceCode = "", clientName = "";
 
@@ -141,9 +153,11 @@ function fileLoaded(parseFlag) {
   var inputFile = null;
 
   if (!parseFlag) {
+    $(agentModalButton).show(); // Show modal button using JQuery
     inputFile = agentFileField.files[0] // Get the agent file loaded by the user
   }
   else {
+    $(serviceModalButton).show(); // Show modal button using JQuery
     inputFile = serviceFileField.files[0] // Get the service file loaded by the user
   }
 
@@ -160,6 +174,9 @@ function fileLoaded(parseFlag) {
     if (!parseFlag) {
 
       var agents = XMLParser.parseAgentFile(reader.result);
+
+      // Update agentXMLContent global
+      agentXMLContent = reader.result;
 
       document.getElementById('agent-file-name').innerHTML = inputFile.name;
 
@@ -180,6 +197,9 @@ function fileLoaded(parseFlag) {
     else {
 
       var services = XMLParser.parseServiceFile(reader.result);
+
+      // Update serviceXMLContent global
+      serviceXMLContent = reader.result;
 
       document.getElementById('service-file-name').innerHTML = inputFile.name;
 
@@ -202,8 +222,53 @@ function fileLoaded(parseFlag) {
 
 //------------------------------------------------------------------------------
 
-const agentFileField = document.getElementById('agent-file-input');
-const serviceFileField = document.getElementById('service-file-input');
+function hideModalButtons() {
+  document.querySelectorAll('.modal-btn').forEach(function(currentValue, currentIndex, listObj) {
+    currentValue.style.display = "none";
+  });
+}
+
+function showModalButtons() {
+  document.querySelectorAll('.modal-btn').forEach(function(currentValue, currentIndex, listObj) {
+    currentValue.style.display = "block";
+  });
+}
+
+function showAgentXMLContent(xmlContent) {
+  // Get corresponding modal div to write the content
+  var modalBody = document.querySelector('#agentModal .modal-body');
+
+  // Create a <p> to hold the XML text
+  var modalBodyText = document.createElement("p");
+  modalBodyText.innerText = xmlContent;
+  modalBodyText.id = "modal-body-text";
+
+  // To avoid append undefined number of nodes
+  if (document.getElementById("modal-body-text") != null) {
+    document.getElementById("modal-body-text").remove();
+  }
+
+  modalBody.appendChild(modalBodyText);
+}
+
+function showServiceXMLContent (xmlContent) {
+  // Get corresponding modal div to write the content
+  var modalBody = document.querySelector('#serviceModal .modal-body');
+
+  // Create a <p> to hold the XML text
+  var modalBodyText = document.createElement("p");
+  modalBodyText.innerText = xmlContent;
+  modalBodyText.id = "modal-body-text";
+
+  // To avoid append undefined number of nodes
+  if (document.getElementById("modal-body-text") != null) {
+    document.getElementById("modal-body-text").remove();
+  }
+
+  modalBody.appendChild(modalBodyText);
+}
+
+//------------------------------------------------------------------------------
 
 agentFileField.addEventListener('change', function(){
   fileLoaded(false); // When an input agent file is loaded
@@ -212,3 +277,13 @@ agentFileField.addEventListener('change', function(){
 serviceFileField.addEventListener('change', function() {
   fileLoaded(true);
 }); // When an input service file is loaded
+
+agentModalButton.addEventListener('click', function() {
+  showAgentXMLContent(agentXMLContent);
+});
+
+serviceModalButton.addEventListener('click', function() {
+  showServiceXMLContent(serviceXMLContent);
+});
+
+hideModalButtons();
