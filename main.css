@@ -10,22 +10,23 @@ body {
 #title {
   border: solid 3px white;
   padding: 10px;
-  background-color: #7FB3D5;
+  background-color: #8BC34A;
   color: white;
 }
 
 .drop-space {
-  background-color: white;
+  background-color: #2196F3;
   height: 250px;
-  border: 2px black dashed;
+  border: 3px black dashed;
   display: table;
 }
 
 .drop-space:hover {
-  background-color: #F4F6F6;
+  background-color: #64B5F6;
 }
 
 .icon-field i {
+  color: white;
   font-size: 45px;
   margin-bottom: 25px;
 }

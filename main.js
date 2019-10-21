@@ -141,38 +141,58 @@ function fileLoaded(parseFlag) {
   var inputFile = null;
 
   if (!parseFlag) {
-    inputFile = agentFileField.files[0] // Get the file loaded by the user
+    inputFile = agentFileField.files[0] // Get the agent file loaded by the user
   }
   else {
-    inputFile = serviceFileField.files[0] // Get the file loaded by the user
+    inputFile = serviceFileField.files[0] // Get the service file loaded by the user
   }
 
   reader.readAsText(inputFile);
 
   reader.onload = function() { // When the file reading is done do something
 
+    // Create new nodes to update the drop zone with text and change icon
+    var hNode = document.createElement("h5");
+    var fileNameNode = document.createTextNode("Archivo subido: " + inputFile.name);
+    hNode.appendChild(fileNameNode);
+    hNode.style.color = "white";
+
     if (!parseFlag) {
+
       var agents = XMLParser.parseAgentFile(reader.result);
 
       document.getElementById('agent-file-name').innerHTML = inputFile.name;
 
       document.getElementById('agent-icon').setAttribute("class", "fas fa-check");
 
-      var hNode = document.createElement("h5");
-      var fileNameNode = document.createTextNode("Archivo subido: " + inputFile.name);
-      hNode.appendChild(fileNameNode);
+      hNode.id = "success-agent-load";
+
+      // To avoid append undefined number of nodes
+      // Remove it if already exists
+      if (document.getElementById('success-agent-load') != null) {
+        document.getElementById('success-agent-load').remove();
+      }
+
       document.getElementById('agent-drop').appendChild(hNode);
 
       console.log(agents);
     }
     else {
+
       var services = XMLParser.parseServiceFile(reader.result);
+
       document.getElementById('service-file-name').innerHTML = inputFile.name;
+
       document.getElementById('service-icon').setAttribute("class", "fas fa-check");
 
-      var hNode = document.createElement("h5");
-      var fileNameNode = document.createTextNode("Archivo subido: " + inputFile.name);
-      hNode.appendChild(fileNameNode);
+      hNode.id = "success-service-load";
+
+      // To avoid append undefined number of nodes
+      // Remove it if already exists
+      if (document.getElementById('success-service-load') != null) {
+        document.getElementById('success-service-load').remove();
+      }
+
       document.getElementById('service-drop').appendChild(hNode);
 
       console.log(services);
