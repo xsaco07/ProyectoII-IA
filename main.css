@@ -14,22 +14,27 @@ body {
   color: white;
 }
 
-#drop-space {
+.drop-space {
   background-color: white;
   height: 250px;
   border: 2px black dashed;
   display: table;
 }
 
-#drop-space:hover {
+.drop-space:hover {
   background-color: #F4F6F6;
 }
 
-#plus-icon {
+.icon-field i {
   font-size: 45px;
+  margin-bottom: 25px;
 }
 
-#icon-field {
+.upload-icon {
+  font-size: 20px;
+}
+
+.icon-field {
   display: table-cell;
   vertical-align: middle;
   text-align: center;
