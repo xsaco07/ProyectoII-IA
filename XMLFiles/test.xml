@@ -1,0 +1,12 @@
+<?xml version= "1.0"?>
+<inventory>
+  <item sold = 'true'>
+    <name>Bike</name>
+  </item>
+  <item sold = 'false'>
+    <name>Ball</name>
+  </item>
+  <item sold = 'true'>
+    <name>Shoes</name>
+  </item>
+</inventory>

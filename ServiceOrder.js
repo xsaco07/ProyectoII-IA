@@ -1,5 +1,5 @@
 class ServiceOrder{
-	
+
 	constructor(id, clientName, serviceCode){
 		this.id = id;
 		this.clientName = clientName;

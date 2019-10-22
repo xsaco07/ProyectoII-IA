@@ -1,0 +1,42 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  background-color: #F2F3F4;
+}
+
+#title {
+  border: solid 3px white;
+  padding: 10px;
+  background-color: #8BC34A;
+  color: white;
+}
+
+.drop-space {
+  background-color: #2196F3;
+  height: 250px;
+  border: 3px black dashed;
+  display: table;
+}
+
+.drop-space:hover {
+  background-color: #64B5F6;
+}
+
+.icon-field i {
+  color: white;
+  font-size: 45px;
+  margin-bottom: 25px;
+}
+
+.upload-icon {
+  font-size: 20px;
+}
+
+.icon-field {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
