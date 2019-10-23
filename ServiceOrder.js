@@ -33,4 +33,3 @@ class ServiceOrder{
 	}
 }
 
-module.exports = ServiceOrder;
