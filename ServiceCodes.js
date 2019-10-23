@@ -32,4 +32,3 @@ const ServiceCodes = {
 };
 
 
-module.exports = ServiceCodes;
