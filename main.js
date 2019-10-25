@@ -7,6 +7,10 @@ const serviceFileField = document.getElementById('service-file-input');
 var agentModalButton = document.querySelectorAll('.modal-btn')[0];
 var serviceModalButton = document.querySelectorAll('.modal-btn')[1];
 
+var agents = "";
+var services = "";
+
+
 
 // parseFlag = false -> parseAgent
 // parseFlag = true -> parseService
@@ -36,7 +40,7 @@ function fileLoaded(parseFlag) {
 
     if (!parseFlag) {
 
-      var agents = XMLParser.parseAgentFile(reader.result);
+      agents = XMLParser.parseAgentFile(reader.result);
 
       // Update agentXMLContent global
       agentXMLContent = reader.result;
@@ -59,7 +63,7 @@ function fileLoaded(parseFlag) {
     }
     else {
 
-      var services = XMLParser.parseServiceFile(reader.result);
+      services = XMLParser.parseServiceFile(reader.result);
 
       // Update serviceXMLContent global
       serviceXMLContent = reader.result;
@@ -98,36 +102,70 @@ function showModalButtons() {
 
 function showAgentXMLContent(xmlContent) {
   // Get corresponding modal div to write the content
+  var i = 0;
   var modalBody = document.querySelector('#agentModal .modal-body');
+  var modalID = document.createElement("td");
+  var modalName = document.createElement("td");
+  var modalServices = document.createElement("td");
+  //modalBodyText.id = "modal-body-text";
+  // Write content inside table
 
-  // Create a <p> to hold the XML text
-  var modalBodyText = document.createElement("p");
-  modalBodyText.innerText = xmlContent;
-  modalBodyText.id = "modal-body-text";
+  // Get all objects from the XML file
+  while (i < agents.length){
+    modalID.innerText = agents[i].id;
+    modalName.innerText = agents[i].name;
+    modalServices.innerText = agents[i].services;
+    i++;
+    modalBody.appendChild(modalID);
+    modalBody.appendChild(modalName);
+    modalBody.appendChild(modalServices);
+    // Add a new row for each agent
+    modalBody.appendChild(document.createElement(("tr")));
+    modalID = document.createElement("td");
+    modalName = document.createElement("td");
+    modalServices = document.createElement("td");
+  }
+
 
   // To avoid append undefined number of nodes
+
+  //ESTAS LINEAS HAY QUE MODIFICARLAS
   if (document.getElementById("modal-body-text") != null) {
     document.getElementById("modal-body-text").remove();
   }
-
-  modalBody.appendChild(modalBodyText);
 }
 
 function showServiceXMLContent (xmlContent) {
   // Get corresponding modal div to write the content
+  var i = 0;
   var modalBody = document.querySelector('#serviceModal .modal-body');
+  var modalID = document.createElement("td");
+  var modalName = document.createElement("td");
+  var modalServices = document.createElement("td");
 
   // Create a <p> to hold the XML text
-  var modalBodyText = document.createElement("p");
-  modalBodyText.innerText = xmlContent;
-  modalBodyText.id = "modal-body-text";
+  while (i < services.length){
+    modalID.innerText = services[i].id;
+    modalName.innerText = services[i].clientName;
+    modalServices.innerText = services[i].serviceCode;
+    i++;
+    modalBody.appendChild(modalID);
+    modalBody.appendChild(modalName);
+    modalBody.appendChild(modalServices);
+    // Add a new row for each service
+    modalBody.appendChild(document.createElement(("tr")));
+    modalID = document.createElement("td");
+    modalName = document.createElement("td");
+    modalServices = document.createElement("td");
+  }
+  //modalBodyText.id = "modal-body-text";
 
   // To avoid append undefined number of nodes
+
+  //ESTAS LINEAS HAY QUE MODIFICARLAS
   if (document.getElementById("modal-body-text") != null) {
     document.getElementById("modal-body-text").remove();
   }
-
-  modalBody.appendChild(modalBodyText);
 }
 
 //------------------------------------------------------------------------------
