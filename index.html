@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="./main.css">
+  <script src="https://kit.fontawesome.com/1927c2f92b.js"></script>
+  <title>Files</title>
+  <script src="loader.js"></script>
+</head>
+<body>
+
+  <div class="container-fluid">
+
+    <div class="row mb-5" id="title">
+      <div class="col-2">
+        <img width="100px" height="100px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/General_Electric_logo.svg/1200px-General_Electric_logo.svg.png" alt="">
+      </div>
+      <div class="col-10">
+        <h2 class="mt-2">General Electric - Centroamérica</h2>
+        <h4>Distribución de servicios semanal</h4>
+      </div>
+    </div>
+
+    <div class="row justify-content-center text-center">
+      <div class="col-4 mb-2 mr-5">
+        <h2>Suelte el archivo XML de Servicios</h2>
+      </div>
+      <div class="col-4 mb-2">
+        <h2>Suelte el archivo XML de Agentes</h2>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+
+      <div class="col-4 text-center mr-5 drop-space">
+        <div class="icon-field" id="agent-drop">
+          <i class="fas fa-file-medical" id="agent-icon"></i>
+        </div>
+      </div>
+
+      <div class="col-4 text-center drop-space">
+        <div class="icon-field" id="service-drop">
+          <i class="fas fa-file-medical" id="service-icon"></i>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row justify-content-center mt-4">
+
+      <div class="col-4 mr-5">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroupFileAddon01">
+              <i class="fas fa-upload upload-icon"></i>
+            </span>
+          </div>
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="agent-file-input"
+              aria-describedby="inputGroupFileAddon01">
+            <label class="custom-file-label" id="agent-file-name" for="file-input">No se ha cargado ningún archivo</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroupFileAddon01">
+              <i class="fas fa-upload upload-icon"></i>
+            </span>
+          </div>
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="service-file-input"
+              aria-describedby="inputGroupFileAddon01">
+            <label class="custom-file-label" id="service-file-name" for="file-input">No se ha cargado ningún archivo</label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row justify-content-center mt-4">
+
+      <div class="col-4 text-center mr-4">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary modal-btn" data-toggle="modal" data-target="#agentModal">
+          Mostrar contenido
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="agentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Agent XML content</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4 text-center">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary modal-btn" data-toggle="modal" data-target="#serviceModal">
+          Mostrar contenido
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="serviceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Service XML content</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p id="modal-body-text"></p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="main.js"></script>
+</html>
