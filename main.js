@@ -6,6 +6,7 @@ const serviceFileField = document.getElementById('service-file-input');
 
 var agentModalButton = document.querySelectorAll('.modal-btn')[0];
 var serviceModalButton = document.querySelectorAll('.modal-btn')[1];
+var resultModalButton = document.querySelectorAll('.modal-btn') [2];
 
 var agents = [];
 var services = [];
@@ -57,6 +58,9 @@ function fileLoaded(parseFlag) {
 
       document.getElementById('agent-drop').appendChild(hNode);
 
+      if (services.length > 0){
+        resultModalButton.disabled = false;
+      }
     }
     else {
 
@@ -79,6 +83,9 @@ function fileLoaded(parseFlag) {
 
       document.getElementById('service-drop').appendChild(hNode);
 
+      if (agents.length > 0){
+        resultModalButton.disabled = false;
+      }
     }
   }
 }
@@ -168,6 +175,24 @@ function showServiceXMLContent (xmlContent) {
   }
 
 }
+//Create scheduler object and call functions to return best combination
+function showResults () {
+
+  var scheduler = new Scheduler(agents, services);
+  var bestIndividual = scheduler.solveGenetics();
+
+  //console.log(scheduler);
+
+  //Once we have the best individual, set the table to show the content correctly calling showResultFormated(individualContent)
+  //showResultFormated(bestIndividual);
+}
+
+
+
+function showResultFormated(individualContent){
+
+}
+
 
 //------------------------------------------------------------------------------
 
@@ -187,4 +212,12 @@ serviceModalButton.addEventListener('click', function() {
   showServiceXMLContent(serviceXMLContent);
 });
 
+resultModalButton.addEventListener('click', function() {
+  showResults();
+});
+
 hideModalButtons();
+
+$(resultModalButton).show();
+
+resultModalButton.disabled = true;
