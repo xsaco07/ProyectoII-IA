@@ -7,10 +7,8 @@ const serviceFileField = document.getElementById('service-file-input');
 var agentModalButton = document.querySelectorAll('.modal-btn')[0];
 var serviceModalButton = document.querySelectorAll('.modal-btn')[1];
 
-var agents = "";
-var services = "";
-
-
+var agents = [];
+var services = [];
 
 // parseFlag = false -> parseAgent
 // parseFlag = true -> parseService
@@ -59,7 +57,6 @@ function fileLoaded(parseFlag) {
 
       document.getElementById('agent-drop').appendChild(hNode);
 
-      console.log(agents);
     }
     else {
 
@@ -82,11 +79,9 @@ function fileLoaded(parseFlag) {
 
       document.getElementById('service-drop').appendChild(hNode);
 
-      console.log(services);
     }
   }
 }
-
 
 function hideModalButtons() {
   document.querySelectorAll('.modal-btn').forEach(function(currentValue, currentIndex, listObj) {
@@ -101,71 +96,77 @@ function showModalButtons() {
 }
 
 function showAgentXMLContent(xmlContent) {
-  // Get corresponding modal div to write the content
+
   var i = 0;
   var modalBody = document.querySelector('#agentModal .modal-body');
-  var modalID = document.createElement("td");
-  var modalName = document.createElement("td");
-  var modalServices = document.createElement("td");
-  //modalBodyText.id = "modal-body-text";
-  // Write content inside table
 
-  // Get all objects from the XML file
+  // To avoid append undefined number of nodes
+  var tds = $(".new-agent-td")
+  if(tds.length > 0) {
+    console.log(tds.length);
+    $(".new-agent-td").remove();
+  }
+
+  // Write content inside table
   while (i < agents.length){
+
+    var modalID = document.createElement("td");
+    var modalName = document.createElement("td");
+    var modalServices = document.createElement("td");
+
     modalID.innerText = agents[i].id;
+    modalID.className = "new-agent-td";
     modalName.innerText = agents[i].name;
+    modalName.className = "new-agent-td";
     modalServices.innerText = agents[i].services;
-    i++;
+    modalServices.className = "new-agent-td";
+
     modalBody.appendChild(modalID);
     modalBody.appendChild(modalName);
     modalBody.appendChild(modalServices);
     // Add a new row for each agent
     modalBody.appendChild(document.createElement(("tr")));
-    modalID = document.createElement("td");
-    modalName = document.createElement("td");
-    modalServices = document.createElement("td");
+
+    i++;
   }
 
-
-  // To avoid append undefined number of nodes
-
-  //ESTAS LINEAS HAY QUE MODIFICARLAS
-  if (document.getElementById("modal-body-text") != null) {
-    document.getElementById("modal-body-text").remove();
-  }
 }
 
 function showServiceXMLContent (xmlContent) {
-  // Get corresponding modal div to write the content
+
   var i = 0;
   var modalBody = document.querySelector('#serviceModal .modal-body');
-  var modalID = document.createElement("td");
-  var modalName = document.createElement("td");
-  var modalServices = document.createElement("td");
 
-  // Create a <p> to hold the XML text
+  // To avoid append undefined number of nodes
+  var tds = $(".new-service-td")
+  if(tds.length > 0) {
+    console.log(tds.length);
+    $(".new-service-td").remove();
+  }
+
+  // Write content inside table
   while (i < services.length){
+
+    var modalID = document.createElement("td");
+    modalID.className = "new-service-td";
+    var modalName = document.createElement("td");
+    modalName.className = "new-service-td";
+    var modalServices = document.createElement("td");
+    modalServices.className = "new-service-td";
+
     modalID.innerText = services[i].id;
     modalName.innerText = services[i].clientName;
     modalServices.innerText = services[i].serviceCode;
-    i++;
+
     modalBody.appendChild(modalID);
     modalBody.appendChild(modalName);
     modalBody.appendChild(modalServices);
     // Add a new row for each service
     modalBody.appendChild(document.createElement(("tr")));
-    modalID = document.createElement("td");
-    modalName = document.createElement("td");
-    modalServices = document.createElement("td");
-  }
-  //modalBodyText.id = "modal-body-text";
 
-  // To avoid append undefined number of nodes
-
-  //ESTAS LINEAS HAY QUE MODIFICARLAS
-  if (document.getElementById("modal-body-text") != null) {
-    document.getElementById("modal-body-text").remove();
+    i++;
   }
+
 }
 
 //------------------------------------------------------------------------------
