@@ -10,56 +10,28 @@ class Scheduler{
 	/**
 	 * @param {agents} list of Agents
 	 * @param {services} list of Service Orders
+	 * @param {services} Domain
 	 */
-
-	constructor(agents, serviceOrders){
+	constructor(agents, serviceOrders, domain){
+		this.domain = domain;
 		this.agents = agents;
 		this.serviceOrders = serviceOrders;
 	}
 
-	setServiceOrders(serviceOrders){
-		this.serviceOrders = serviceOrders;
-	}
-
-	getServiceOrders(){
-		return this.serviceOrders;
-	}
-
-	setAgents(agents){
-		this.agents = agents;
-	}
-
-	getAgents(){
-		return this.agents;
-	}
-
 	/**
-	 * @param {individual1} 1st individual
-	 * @param {individual2} 2nd individual
-	 * @returns the new individual after crossment
-	 */
-	cross(individual1, individual2){
-
-		//Aquí va la lógica del cruce
-
-	}
-
-
-	/**
-	 * @param {population} list of Individuals
+	 * @param {pop_size} int tamano de la poblacion que se generara al inicio para
+	 comenzar el algoritmo
+	 * @param {elite_prop} float proporcion de individuos que pasaran sus genes a
+	 la siguiente generacion
+	 * @param {mutate_prob} float probabilidad de mutacion de los individuos
+	 comenzar el algoritmo
+	 * @param {max_iter} int cantidad maxima de iteraciones a ejectuar
 	 * @returns the best individual (solution)
 	 */
-	solveGenetics(population){
+	solveGenetics(pop_size, elite_prop, mutate_prob, max_iter){
 
 		// Aquí va la lógica del flujo general del algoritmo genético @IsaacMena
 
-		/*
-		Se deben recibir los siguientes parametros:
-		* pop_size (tamano de la poblacion que se generara al inicio para comenzar el algoritmo)
-		* elite_prop (proporcion de individuos que pasaran sus genes a la siguiente generacion)
-		* mutate_prob (probabilidad de mutacion de los individuos)
-		* max_iter (cantidad maxima de iteraciones a ejectuar)
-		*/
 		/*
 
 		// Pseudocodigo //
@@ -124,48 +96,4 @@ class Scheduler{
 
 	}
 
-	//Creates the initial population, crosses and mutates individuals and returns the best individual possible
-	startProcess(){
-
-		//Collect all agents
-		var agentsIds = [];
-		this.agents.forEach(function(agent){
-		    agentsIds.push(agent.getId());
-		});
-
-    //Collect all orders
-    var serviceOrdersIds = [];
-    this.serviceOrders.forEach(function(serviceOrder){
-    	serviceOrdersIds.push(serviceOrder.getId());
-    });
-
-    var population = [];
-
-
-
-    for (let i = 0; i < numberOfIndividuals; i++) {
-
-    	//var individual = "";
-
-    	while(serviceOrdersIds.length > 0){
-
-    		var randomServiceId = getRandomInt(0, serviceOrdersIds.length);
-    		var randomAgentId = getRandomInt(0, agentsIds.length);
-    		console.log(serviceOrdersIds[randomServiceId]+" " +agentsIds[randomAgentId]);
-
-    		//Here we need to validate that the agent can perform the service and that it doesn't exceeds the 40 hours per agent
-    		//if it accomplishes those two conditions, add to the dictionary the combination @EmmanuelAlfaro
-
-
-    		//Remove the Service Order Id from the Service Order Id's list
-    		serviceOrdersIds.splice(randomServiceId, 1);
-
-			}
-
-    	//population.push(individual);
-
-		}
-
-		//solveGenetics(population);
-	}
 }
