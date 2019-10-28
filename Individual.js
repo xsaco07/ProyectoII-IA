@@ -4,47 +4,14 @@ class Individual{
      * @param agents A list of Agent objects
      * @param serviceOrders A list of ServiceOrder objects
      */
-    constructor(agents, serviceOrders){
+    constructor(assignments){
         /**
          * Dictionary with ints as keys and lists as values 
          * The key is the agent id
          * The value is the list of the orders ids assigned to that agent
          */
-        this.assignments = {};
-        // console.log(this.assignments);
-
-        // Given and order id, map to its ServiceOrder object
-        this.serviceOrdersMap = {};
-        serviceOrders.forEach(function(serviceOrder){
-            this.serviceOrdersMap[serviceOrder.getId()] = serviceOrder;
-        }.bind(this));
-
-        console.log("serviceOrdersMap");
-        console.log(this.serviceOrdersMap);
-
-        // Collect all the orders ids in an array
-        var serviceOrdersIds = [];
-        serviceOrders.forEach(function(serviceOrder){
-            serviceOrdersIds.push(serviceOrder.getId());
-        });
-
-        // Split the orders evenly between agents
-        var currentAgentId;
-        var currentAssignmentList;
-        for (let i = 0; i < serviceOrdersIds.length; i++) {
-            // Loop through agentsIds in a circular way using %
-            currentAgentId = agents[i%agents.length].getId();
-
-            // Initialize the assignments list for each agent
-            if(! (currentAgentId in this.assignments)){
-                this.assignments[currentAgentId] = [];
-            }
-            currentAssignmentList = this.assignments[currentAgentId];
-            currentAssignmentList.push(serviceOrdersIds[i]);
-        }
-
-        console.log("assignment result: ");
-        console.log(this.assignments);
+        this.assignments = assignments;
+        
     }
 
 
@@ -64,7 +31,9 @@ class Individual{
     mutate(){
 
     }
-
+    
+    
+    
     
     /** 
      * Returns a float that means how good it is
@@ -72,7 +41,9 @@ class Individual{
      * Criteria Used: 
      *    - Look for low variance in the agents commissions 
      *    - Look for that no agent will work more than 40 hours a week in total 
-     */ 
+     */
+     
+     /* 
     getFitness(){
         // Fill this list with the sum of the commissions of each agent to calculate its variance
         var agentsCommissions = [];
@@ -126,4 +97,6 @@ class Individual{
         // Return the final fitness number
         return multiplier * value;
     }
+   
+    * */
 }
