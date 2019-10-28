@@ -1,4 +1,4 @@
-const scripts = ["Agent.js","ServiceOrder.js","ServiceCodes.js","XMLParser.js"]
+const scripts = ["Scheduler.js","Agent.js","ServiceOrder.js","ServiceCodes.js","XMLParser.js"]
     scripts.forEach(function(name){
       var script = document.createElement('script');
       script.src = name;
