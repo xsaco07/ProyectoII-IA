@@ -179,7 +179,7 @@ function showServiceXMLContent (xmlContent) {
 function showResults () {
 
   var scheduler = new Scheduler(agents, services);
-  var bestIndividual = scheduler.solveGenetics();
+  var bestIndividual = scheduler.startProcess();
 
   //console.log(scheduler);
 
@@ -190,6 +190,8 @@ function showResults () {
 
 
 function showResultFormated(individualContent){
+
+  //Aquí va la logica para mostrar el individuo retornado en el método de arriba en el index.html @KennethVargas
 
 }
 
