@@ -15,7 +15,7 @@ class Domain {
 
   isValid(individual) {
     // Revisar que no se sobrepasen las 40 horas
-    var to_much_work = false;
+    var to_much_work = true;
     for(var i = 0; i < agents.length; i++) {
       if(this.getTotalWorkingHours(agents[i].id, individual.assignments) > 40) to_much_work = false; break;
     }
@@ -34,11 +34,21 @@ class Domain {
       // Remove the last orderId from the new object
       var dictAsList = Object.entries(newIndividual.assignments);
 
-      var lastTuple = dictAsList[dictAsList.length-1];
+      var lastTuple = [[],[]];
+
+      var aux = 1;
+
+      while(lastTuple[1].length == 0){
+        lastTuple = dictAsList[dictAsList.length-aux];
+        console.log("Last tuple", lastTuple);
+        aux++;
+      }
 
       var lastList = lastTuple[1];
 
       var lastOrderId = lastList[lastList.length-1];
+
+      console.log("Last order", lastOrderId);
 
       var oldAgentId = lastTuple[0];
 
@@ -56,7 +66,9 @@ class Domain {
           }
       }
 
+      console.log("New Individual", newIndividual);
       newIndividual.assignments[oldAgentId].pop();
+        console.log("New Individual", newIndividual);
       newIndividual.assignments[newAgentId].push(lastOrderId);
 
       if(! this.isValid(newIndividual)){
@@ -86,7 +98,7 @@ class Domain {
      var serviceCode = codes[serviceCodeIndex];
      // console.log("trying to find common in ",serviceCode);
      var commons = this.agents.filter(agent => agent.services.indexOf(serviceCode) != -1);
-     console.log("commons", commons);
+     //console.log("commons", commons);
      if( 2 <= commons.length){
 
       // All orders that have the matched code in agents

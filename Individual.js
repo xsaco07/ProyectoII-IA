@@ -42,9 +42,9 @@ class Individual{
             for (let i = 0; i < ordersIds.length; i++) {
                 var orderId = ordersIds[i];
                 // Sum its commission
-                agentTotalComission += this.serviceOrdersMapping[orderId].serviceCode.commission;
+                agentTotalComission += ServiceCodes[this.serviceOrdersMapping[orderId].serviceCode].commission;
                 // Sum its duration
-                agentTotalWorkingHours += this.serviceOrdersMapping[orderId].serviceCode.duration;
+                agentTotalWorkingHours += ServiceCodes[this.serviceOrdersMapping[orderId].serviceCode].duration;
             }
 
             // Append the values to the lists
@@ -52,7 +52,6 @@ class Individual{
             agentsWorkingHours.push(agentTotalWorkingHours);
 
         }
-
         // Calculate commissions variance
         var commissions_variance = d3.variance(agentsCommissions);
 

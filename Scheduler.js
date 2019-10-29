@@ -31,11 +31,12 @@ class Scheduler{
 			for(var i = 0; i < pop_size; i++) {
 
 				var individuo = this.domain.getRandomIndividual();
-				console.log("Individuo generado");
 
 				// Verificamos si es solucion
 				if(this.domain.isSolution(individuo)){
-					console.log("Individuo solucion encontrado: ", individuo);
+					console.log("Individuo solucion encontrado en pob inicial: ", individuo);
+					console.log("Fitness final", individuo.getFitness());
+
 					return individuo;
 				}
 
@@ -70,6 +71,7 @@ class Scheduler{
 					if(prob <= mutate_prob) {
 						do {
 							this.domain.mutate(hijo);
+							console.log("Mutated")
 						} while (!this.domain.isValid(hijo)) {
 							console.log("Mutating");
 							this.domain.mutate(hijo);
@@ -78,6 +80,7 @@ class Scheduler{
 
 					// Verificamos si es solucion
 					if(this.domain.isSolution(hijo)) {
+						console.log("Fitness final", poblacion[0].getFitness());
 						console.log("Individuo solucion encontrado: ", hijo);
 						return hijo;
 					}
@@ -93,6 +96,7 @@ class Scheduler{
 
 			console.log("Iteraciones concluidas");
 			console.log("El mejor individuo encontrado fue: ", poblacion[0]);
+			console.log("Fitness final", poblacion[0].getFitness());
 			return poblacion[0];
 		}
 
