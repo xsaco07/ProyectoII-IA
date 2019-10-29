@@ -28,6 +28,41 @@ class Domain {
    * @returns the new individual after crossment
    */
   crossover(parentA, parentB) {
+      // Duplicate parentA
+      var newIndividual = Object.assign({}, parentA);
+      
+      // Remove the last orderId from the new object
+      var dictAsList = Object.entries(newIndividual.assignments);
+
+      var lastTuple = dictAsList[dictAsList.length-1];
+
+      var lastList = lastTuple[1];
+
+      var lastOrderId = lastList[lastList.length-1];
+
+      var oldAgentId = lastTuple[0];
+
+      var newAgentId = -1;
+
+      for(var agId in parentB.assignments){
+          for(let i=0 ; i<parentB.assignments[agId].length ; i++){
+            if(parentB.assignments[agId][i] == lastOrderId){
+              newAgentId = agId;
+              break;
+            }
+          }
+          if(newAgentId != -1){
+              break;
+          }
+      }
+
+      newIndividual.assignments[oldAgentId].pop();
+      newIndividual.assignments[newAgentId].push(lastOrderId);
+
+      if(! this.isValid(newIndividual)){
+          return parentA;
+      }
+      return newIndividual;
 
   }
 
