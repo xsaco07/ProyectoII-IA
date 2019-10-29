@@ -181,6 +181,7 @@ function showResults () {
   var scheduler = new Scheduler(agents, services);
   var bestIndividual = scheduler.solveGenetics();
 
+
   //console.log(scheduler);
 
   //Once we have the best individual, set the table to show the content correctly calling showResultFormated(individualContent)

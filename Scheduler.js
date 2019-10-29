@@ -98,7 +98,7 @@ class Scheduler{
 			}
 		}
 		
-		return individual;
+		return new Individual(individual);
 	}
 	
 	
@@ -112,11 +112,84 @@ class Scheduler{
 		return individuals;
 	}
 
+	/**
+	 * Mutate and individual (modifies the recevied Individual)
+	 * Doesn't return anything
+	 * Strategy: Find 2 agents that can accomplish the same task and swap an order
+	 *           between them 
+	 * If couldn't find those 2 agents return the individual unmodified 
+	 */
+	mutate(individual){
+
+		var codes = this.serviceOrders.map(function(order){
+			return order.serviceCode;
+		});
+
+		// Try to find a code that 2 agent have in common
+		for (var serviceCode in codes){
+			// console.log("trying to find common in ",serviceCode);
+			var commons = this.agents.filter(agent => agent.services.indexOf(serviceCode) != -1);
+			if( 2 <= commons.length){
+
+				// All orders that have the matched code in agents
+				var servOrders = this.serviceOrders.filter(order => order.serviceCode == serviceCode);
+				var agentIdToChange = -1;
+				var otherIdToChange = -1;
+				// OrderId of an order with the matched code
+				var serviceOrderId = servOrders[0].id;
+
+				for(agId in individual.assignments){
+					for(let i=0 ; i<individual.assignments[agId].length ; i++){
+						if(individual.assignments[agId][i] == serviceOrderId){
+							agentIdToChange = agId;
+							break;
+						}
+						
+					}
+					if(agentIdToChange != -1){
+						break;
+					}
+				}
+				
+				for (let i = 0; i < commons.length; i++) {
+					if(commons[i].id != agentIdToChange){
+						otherIdToChange = commons[i].id;
+						break;
+					}
+				}
+
+				var from = individual.assignments[agentIdToChange];
+				var to = individual.assignments[otherIdToChange];
+
+				to.push(from.pop());
+				return;
+
+			}
+			// else{console.log("failed");}
+		}
+		console.log("could't mutate"); 
+	}
+
+
+	/**
+	 * 
+	 */
+	crossover(individual1, individual2){
+
+	}
 	
 	// Creates the initial population, crosses and mutates individuals and returns the best individual possible
 	solveGenetics(){
-		var pop = this.createInitialPopulation(4);
+		var pop = this.createInitialPopulation(2);
 		console.log("Population ",pop);
+
+		var x = pop[0];
+		// var y = mObj=JSON.parse(JSON.stringify(jsonObject));
+		console.log("Before mutate", x);
+		this.mutate(x);
+		console.log("After mutate", x);
+
+		// console.log("Parent ")
 
 	}
 

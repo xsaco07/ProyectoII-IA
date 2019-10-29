@@ -3,13 +3,13 @@
   <service id="1" code="ICE">
     <client>Jorge Perez</client>
   </service>
-  <service id="2" code="ICG">
+  <service id="2" code="ICE">
     <client>Manuel Perez</client>
   </service>
   <service id="3" code="ILA">
     <client>Pedro Perez</client>
   </service>
-  <service id="4" code="ICE">
+  <service id="4" code="ILA">
     <client>Luisa Perez</client>
   </service>
   <service id="5" code="ILA">
