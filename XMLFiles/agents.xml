@@ -5,6 +5,7 @@
     <service>IGE</service>
     <service>ILA</service>
     <service>RLA</service>
+    <service>ICG</service>
   </agent>
   <agent id="2" name="Agente2">
     <service>ICE</service>
