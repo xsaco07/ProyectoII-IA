@@ -125,10 +125,14 @@ class Scheduler{
 			return order.serviceCode;
 		});
 
+		//console.log("codes",codes);
+
 		// Try to find a code that 2 agent have in common
-		for (var serviceCode in codes){
+		for (var serviceCodeIndex in codes){
+			var serviceCode = codes[serviceCodeIndex]; 
 			// console.log("trying to find common in ",serviceCode);
 			var commons = this.agents.filter(agent => agent.services.indexOf(serviceCode) != -1);
+			console.log("commons", commons);
 			if( 2 <= commons.length){
 
 				// All orders that have the matched code in agents
@@ -138,7 +142,7 @@ class Scheduler{
 				// OrderId of an order with the matched code
 				var serviceOrderId = servOrders[0].id;
 
-				for(agId in individual.assignments){
+				for(var agId in individual.assignments){
 					for(let i=0 ; i<individual.assignments[agId].length ; i++){
 						if(individual.assignments[agId][i] == serviceOrderId){
 							agentIdToChange = agId;
@@ -165,7 +169,9 @@ class Scheduler{
 				return;
 
 			}
-			// else{console.log("failed");}
+			else{
+				console.log("failed");
+			}
 		}
 		console.log("could't mutate"); 
 	}
@@ -185,9 +191,12 @@ class Scheduler{
 
 		var x = pop[0];
 		// var y = mObj=JSON.parse(JSON.stringify(jsonObject));
-		console.log("Before mutate", x);
+		
+		var y = JSON.stringify(x);
+		//console.log("Before mutate", y);
 		this.mutate(x);
-		console.log("After mutate", x);
+		//var z = JSON.stringify(x);
+		//console.log("After mutate", z);
 
 		// console.log("Parent ")
 
