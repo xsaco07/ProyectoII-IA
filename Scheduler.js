@@ -1,10 +1,3 @@
-var numberOfIndividuals = 10;
-
-//Returns an entire number between the min (included) and max (excluded)
-function getRandomInt(min, max){
-	return Math.floor(Math.random() * (max - min)) + min;
-}
-
 class Scheduler{
 
 	/**
@@ -13,189 +6,106 @@ class Scheduler{
 	 * @param {services} Domain
 	 */
 
-    constructor(agents, serviceOrders){
-				this.domain = domain;
+    constructor(agents, serviceOrders, agentsMapping, serviceOrdersMapping){
+				this.domain = new Domain(agents, serviceOrders, agentsMapping, serviceOrdersMapping);
         this.agents = agents;
         this.serviceOrders = serviceOrders;
-
-        // Given the id return the object associated
-        this.agentsMapping = this.createMapping(this.agents);
-        this.ordersMapping = this.createMapping(this.serviceOrders);
+				this.solveGenetics(500, 0.25, 0.05, 1000);
     }
 
-    // Create a dictionary from id's to the actual objects
-    createMapping( myarray ){
-		var mapping = {};
-		myarray.forEach(function(elem){
-			mapping[elem.id] = elem;
-		});
-		return mapping;
-	}
+		/**
+		 * @param {pop_size} int tamano de la poblacion que se generara al inicio para
+		 comenzar el algoritmo
+		 * @param {elite_prop} float proporcion de individuos que pasaran sus genes a
+		 la siguiente generacion
+		 * @param {mutate_prob} float probabilidad de mutacion de los individuos
+		 comenzar el algoritmo
+		 * @param {max_iter} int cantidad maxima de iteraciones a ejectuar
+		 * @returns the best individual (solution)
+		 */
+		solveGenetics(pop_size, elite_prop, mutate_prob, max_iter){
 
-    setServiceOrders(serviceOrders){
-		this.serviceOrders = serviceOrders;
-	}
+			var poblacion = []; // aca van los individuos ordenados por fitness
 
-	/**
-	 * @param {pop_size} int tamano de la poblacion que se generara al inicio para
-	 comenzar el algoritmo
-	 * @param {elite_prop} float proporcion de individuos que pasaran sus genes a
-	 la siguiente generacion
-	 * @param {mutate_prob} float probabilidad de mutacion de los individuos
-	 comenzar el algoritmo
-	 * @param {max_iter} int cantidad maxima de iteraciones a ejectuar
-	 * @returns the best individual (solution)
-	 */
-	solveGenetics(pop_size, elite_prop, mutate_prob, max_iter){
+			// Generar poblacion inicial
+			for(var i = 0; i < pop_size; i++) {
 
-		// Aquí va la lógica del flujo general del algoritmo genético @IsaacMena
+				var individuo = this.domain.getRandomIndividual();
+				console.log("Individuo generado");
 
-		/*
+				// Verificamos si es solucion
+				if(this.domain.isSolution(individuo)){
+					console.log("Individuo solucion encontrado: ", individuo);
+					return individuo;
+				}
 
-		// Pseudocodigo //
+				// Se inserta ordenadamente el nuevo individuo
+				poblacion.splice(0, this.getOrderedIndex(poblacion, individuo.getFitness()), individuo);
 
-		poblacion = [] // aca van los individuos ordenados por fitness
+			}
 
-		// Generar pobalcion inicial
-		for i = 0 to pop_size:
-
-			individuo = dominio.generate_random_individuo()
-
-			// Verificamos si es solucion
-			if dominio.es_solucion(individuo)
-				mostrar_individuo(individuo)
-				return
-
-			poblacion.insert_ordenado(individuo)
-
-		while max_iter > 0:
+			while(max_iter > 0) {
 
 				// Cantidad de individuos que se van a cruzar
-				cant_padres = floor(poblacion.length() * elite_prop)
-
+				var cant_padres = Math.floor(poblacion.length * elite_prop);
 				// Tome los mejores (cant_padres) individuos de la poblacion
-				siguiente_generacion = [0:cant_padres]
-
+				var siguiente_generacion = poblacion.slice(cant_padres+1);
 				// Cantidad de hijos a generar
-				cant_hijos = poblacion.length() - cant_padres
+				var cant_hijos = poblacion.length - cant_padres;
 
-				while hijos > 0:
+				while(cant_hijos > 0) {
 
-					// Seleccione 2 padres para cruzar
-					padreA = siguiente_generacion[random]
-					padreB = siguiente_generacion[random]
+					// Seleccionamos 2 padres para cruzar
+					var padreA = siguiente_generacion[this.getRandomInt(0, siguiente_generacion.length-1)];
+					var padreB = siguiente_generacion[this.getRandomInt(0, siguiente_generacion.length-1)];
 
 					// Obtiene un hijo mediante el cruce
-					hijo = dominio.cruzar(padreA, padreB)
+					var hijo = this.domain.crossover(padreA, padreB);
 
 					// Generar una probabilidad random entre 0 y 1
 					// Esto para ver si mutamos o no el hijo recien creado
-					prob_random = generador_de_probabilidad_random(0, 1)
+					var prob = Math.random();
 
-					if prob_random <= mutate_prob:
-						hijo = dominio.mutar(hijo)
+					// Si la probabilidad esta dentro del rango se muta el individuo
+					if(prob <= mutate_prob) {
+						do {
+							this.domain.mutate(hijo);
+						} while (!this.domain.isValid(hijo)) {
+							console.log("Mutating");
+							this.domain.mutate(hijo);
+						}
+					}
 
 					// Verificamos si es solucion
-					if dominio.es_solucion(individuo)
-						mostrar_individuo(individuo)
-						return
+					if(this.domain.isSolution(hijo)) {
+						console.log("Individuo solucion encontrado: ", hijo);
+						return hijo;
+					}
 
-					siguiente_generacion.insert_ordenado(hijo)
+					// Se inserta ordenadamente el nuevo individuo
+					siguiente_generacion.splice(0, this.getOrderedIndex(siguiente_generacion, hijo.getFitness()), hijo);
 
-					children -= 1
-
-				poblacion = siguiente_generacion
-
-				max_iter -= 1
-
-		// Mostrar mejor mejor individuo encontrado en caso de que no encontrar solucion
-		mostrar_individuo(poblacion[0])
-		*/
-	}
-
-	getAgents(){
-		return this.agents;
-	}
-
-	// Returns an Integer number between the min and max (both included)
-	getRandomInt(min, max){
-		return Math.round(Math.random() * (max - min)) + min;
-	}
-
-
-	getRandomAgentId(){
-		var index = this.getRandomInt(0, this.agents.length-1);
-		//console.log("index random", index, this.agents);
-		return this.agents[index].id;
-	}
-
-	getTotalWorkingHours(agentId, dict){
-		//console.log("agId", agentId, "dict", dict);
-		var hours = 0;
-		var ordersIds = dict[agentId];
-		//console.log("getIds",ordersIds);
-		ordersIds.forEach(function(orderId){
-			var serviceCode = this.ordersMapping[orderId].serviceCode;
-			hours += ServiceCodes[serviceCode].duration;
-		}.bind(this));
-		//console.log("agent ",agentId, " has ",hours, " hours");
-		return hours;
-	}
-
-	getRandomIndividual(){
-		var individual = {};
-		// Initialize every agent without orders assigned
-		for(var agentId in this.agentsMapping){
-			individual[agentId] = [];
-		}
-		//console.log("after init", individual);
-		var currentAgentId, currentOrderId;
-		//console.log("before split", this.serviceOrders);
-
-		for(let i=0 ; i<this.serviceOrders.length ; i++){
-			currentOrderId = this.serviceOrders[i].id;
-			//console.log("assigning order", currentOrderId);
-			var maxTries = 4;
-			var done = false;
-
-			while(0<maxTries && ! done){
-				// Look for a random agent
-				currentAgentId =  this.getRandomAgentId();
-				//console.log("trying to assing to agent ", currentAgentId);
-
-				// Check if it can handle this job and is not overworking TODO: check can handle
-				if( this.getTotalWorkingHours(currentAgentId, individual) < 4 ){
-					individual[currentAgentId].push(currentOrderId);
-					done = true;
-					//console.log("done");
-					//console.log("agent ",currentAgentId," now has ",individual[currentAgentId]);
+					cant_hijos --;
 				}
-				maxTries -= 1;
-
-
+				max_iter --;
+				poblacion = siguiente_generacion;
 			}
+
+			console.log("Iteraciones concluidas");
+			console.log("El mejor individuo encontrado fue: ", poblacion[0]);
+			return poblacion[0];
 		}
 
-		return individual;
-	}
-
-
-	// Returns a list of -size- individuals generated randomly
-	createInitialPopulation(size){
-		var individuals = [];
-		while(0 < size){
-			individuals.push(this.getRandomIndividual());
-			size--;
+		getOrderedIndex(poblacion, aptitud) {
+			for (var i = 0; i < poblacion.length; i++) {
+				if(poblacion[i].getFitness() > aptitud) return i;
+			}
+			return 0;
 		}
-		return individuals;
-	}
 
-
-	// Creates the initial population, crosses and mutates individuals and returns the best individual possible
-	solveGenetics(){
-		var pop = this.createInitialPopulation(4);
-		console.log("Population ",pop);
+		//Returns an entire number between the min (included) and max (excluded)
+		getRandomInt(min, max){
+			return Math.floor(Math.random() * (max - min)) + min;
+		}
 
 	}
-
-}
